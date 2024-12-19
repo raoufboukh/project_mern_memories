@@ -29,6 +29,27 @@ export const updateMemory = async (req, res) => {
   }
 };
 
+export const likeMemory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedMemory = await memories.findByIdAndUpdate(
+      id,
+      { $inc: { like: 1 } }, // Use $inc to increment the like count
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedMemory) {
+      return res.status(404).send({ message: "Memory not found" });
+    }
+
+    res.status(200).send(updatedMemory);
+  } catch (err) {
+    res.status(500).send({ message: "Failed to like memory", error: err });
+  }
+};
+
+
 export const deleteMemory = async (req, res) => {
   try {
     const { id } = req.params;

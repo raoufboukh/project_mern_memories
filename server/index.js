@@ -8,8 +8,12 @@ const db =
 
 const app = express();
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: "30mb", extended: true }));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use("/", router);
 mongoose.connect(db).then(() => {
   console.log("db connected");

@@ -3,7 +3,11 @@ import { BiSolidLike } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { deleteMemory, fetchMemories } from "../store/memoriesSlice";
+import {
+  deleteMemory,
+  fetchMemories,
+  likeMemory,
+} from "../store/memoriesSlice";
 import { AppDispatch, RootState } from "../store/store";
 
 interface PostsProps {
@@ -42,7 +46,10 @@ const Posts: React.FC<PostsProps> = ({ className }) => {
               <p className="text-gray-400">{memory.message}</p>
             </div>
             <div className="flex justify-between p-3 items-end">
-              <button className="flex items-center gap-2 text-blue-400">
+              <button
+                className="flex items-center gap-2 text-blue-400"
+                onClick={() => dispatch(likeMemory(memory._id))}
+              >
                 <BiSolidLike /> Like {memory.like}
               </button>
               <button
