@@ -1,12 +1,23 @@
 import { BsThreeDots } from "react-icons/bs";
 import { BiSolidLike } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchMemories } from "../store/memoriesSlice";
+import { AppDispatch, RootState } from "../store/store";
 
 interface PostsProps {
   className: string;
 }
 
 const Posts: React.FC<PostsProps> = ({ className }) => {
+  const memories = useSelector((state: RootState) => state.memories.memories);
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMemories());
+  }, [dispatch]);
+  console.log(memories);
   return (
     <div className={className}>
       <div className="bg-white rounded-xl overflow-hidden h-[400px]">
