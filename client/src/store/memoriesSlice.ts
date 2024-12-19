@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface Memory {
-  id: string;
+  _id: string;
   creator: string;
   title: string;
   message: string;
@@ -84,7 +84,7 @@ export const memoriesSlice = createSlice({
         deleteMemory.fulfilled,
         (state, action: PayloadAction<string>) => {
           state.memories = state.memories.filter(
-            (memory) => memory.id !== action.payload
+            (memory) => memory._id !== action.payload
           );
         }
       )
@@ -92,7 +92,7 @@ export const memoriesSlice = createSlice({
         updateMemory.fulfilled,
         (state, action: PayloadAction<Memory>) => {
           const index = state.memories.findIndex(
-            (memory) => memory.id === action.payload.id
+            (memory) => memory._id === action.payload._id
           );
           if (index !== -1) {
             state.memories[index] = action.payload;

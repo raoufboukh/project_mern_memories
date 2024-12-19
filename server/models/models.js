@@ -5,7 +5,10 @@ const schema = new mongoose.Schema({
   title: String,
   message: String,
   tags: String,
-  like: Number,
+  like: {
+    type: [String],
+    default: 0,
+  },
   image: String,
 });
 
