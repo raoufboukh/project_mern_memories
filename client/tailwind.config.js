@@ -8,6 +8,10 @@ export default {
       lg: "992px",
       xl: "1180px",
     },
+    container: {
+      center: true,
+      padding: "1rem",
+    },
     backgroundImage: {
       bg: "url('/src/assets/bg.webp')",
     },
