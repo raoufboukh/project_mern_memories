@@ -14,7 +14,7 @@ import moment from "moment";
 
 interface PostsProps {
   className: string;
-  onEdit: (memory: any) => void; // Callback for edit
+  onEdit: (memory: any) => void;
 }
 
 const Posts: React.FC<PostsProps> = ({ className, onEdit }) => {
@@ -39,7 +39,7 @@ const Posts: React.FC<PostsProps> = ({ className, onEdit }) => {
                 <h3>{memory.creator}</h3>
                 <BsThreeDots
                   className="cursor-pointer"
-                  onClick={() => onEdit(memory)} // Trigger edit callback
+                  onClick={() => onEdit(memory)}
                 />
               </div>
               <p>{moment(memory.createdAt).fromNow()}</p>

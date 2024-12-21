@@ -6,7 +6,7 @@ import { addMemory, updateMemory } from "../store/memoriesSlice";
 
 interface FormProps {
   className: string;
-  memoryToEdit?: any; // Memory to edit
+  memoryToEdit?: any;
 }
 
 const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
@@ -18,7 +18,6 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    // Populate form fields if editing
     if (memoryToEdit) {
       setCreator(memoryToEdit.creator || "");
       setTitle(memoryToEdit.title || "");
@@ -33,7 +32,7 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result as string); // Convert file to base64 string
+        setImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
@@ -48,16 +47,15 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
       tags,
       image: image || "",
       like: memoryToEdit?.like || 0,
-      _id: memoryToEdit?._id, // Include `_id` for updates
+      _id: memoryToEdit?._id,
     };
 
     if (memoryToEdit) {
       dispatch(updateMemory({ id: memoryData._id, memory: memoryData })); // Update existing memory
     } else {
-      dispatch(addMemory(memoryData)); // Add new memory
+      dispatch(addMemory(memoryData));
     }
 
-    // Clear form fields
     setCreator("");
     setTitle("");
     setMessage("");
@@ -70,7 +68,7 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col justify-center items-center rounded-md bg-white mx-auto p-1 gap-2">
           <h2 className="text-xl text-blue-400 outline-none">
-            Creating a Memory
+            {memoryToEdit ? "Editing a Memory" : "Creating a Memory"}
           </h2>
           <input
             type="text"
@@ -106,7 +104,6 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
           <input
             type="file"
             className="p-2 w-[90%]"
-            // value={image || ""}
             onChange={handleFileChange}
           />
           <button type="submit" className="bg-blue-400 text-white p-2 w-[90%]">

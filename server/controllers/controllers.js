@@ -35,8 +35,8 @@ export const likeMemory = async (req, res) => {
 
     const updatedMemory = await memories.findByIdAndUpdate(
       id,
-      { $inc: { like: 1 } }, // Use $inc to increment the like count
-      { new: true } // Return the updated document
+      { $inc: { like: 1 } },
+      { new: true }
     );
 
     if (!updatedMemory) {
