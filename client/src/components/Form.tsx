@@ -1,19 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
 import { useEffect, useState } from "react";
-import { addMemory } from "../store/memoriesSlice";
+import { addMemory, updateMemory } from "../store/memoriesSlice";
 
 interface FormProps {
   className: string;
+  memoryToEdit?: any; // Memory to edit
 }
 
-const Form: React.FC<FormProps> = ({ className }) => {
+const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
   const [creator, setCreator] = useState("");
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [tags, setTags] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    // Populate form fields if editing
+    if (memoryToEdit) {
+      setCreator(memoryToEdit.creator || "");
+      setTitle(memoryToEdit.title || "");
+      setMessage(memoryToEdit.message || "");
+      setTags(memoryToEdit.tags || "");
+      setImage(memoryToEdit.image || null);
+    }
+  }, [memoryToEdit]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -28,34 +41,29 @@ const Form: React.FC<FormProps> = ({ className }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(
-      addMemory({
-        creator,
-        title,
-        message,
-        tags,
-        image: image || "", // Ensure image is a string
-        like: 0,
-      })
-    );
-    // Clear form fields after submission
+    const memoryData = {
+      creator,
+      title,
+      message,
+      tags,
+      image: image || "",
+      like: memoryToEdit?.like || 0,
+      _id: memoryToEdit?._id, // Include `_id` for updates
+    };
+
+    if (memoryToEdit) {
+      dispatch(updateMemory({ id: memoryData._id, memory: memoryData })); // Update existing memory
+    } else {
+      dispatch(addMemory(memoryData)); // Add new memory
+    }
+
+    // Clear form fields
     setCreator("");
     setTitle("");
     setMessage("");
     setTags("");
-    setImage("");
+    setImage(null);
   };
-  useEffect(() => {
-    if (localStorage.getItem("currentMemory")) {
-      const memory = JSON.parse(localStorage.getItem("currentMemory") || "");
-      console.log(memory);
-      setCreator(memory.creator);
-      setTitle(memory.title);
-      setMessage(memory.message);
-      setTags(memory.tags);
-      setImage(memory.image);
-    }
-  }, []);
 
   return (
     <div className={className}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsThreeDots } from "react-icons/bs";
 import { BiSolidLike } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
@@ -9,21 +10,21 @@ import {
   likeMemory,
 } from "../store/memoriesSlice";
 import { AppDispatch, RootState } from "../store/store";
-// import moment from "moment";
+import moment from "moment";
 
 interface PostsProps {
   className: string;
+  onEdit: (memory: any) => void; // Callback for edit
 }
 
-localStorage.removeItem("currentMemory");
-
-const Posts: React.FC<PostsProps> = ({ className }) => {
+const Posts: React.FC<PostsProps> = ({ className, onEdit }) => {
   const memories = useSelector((state: RootState) => state.memories.memories);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchMemories());
   }, [dispatch]);
+
   return (
     <div className={className}>
       {memories.map((memory) => (
@@ -38,15 +39,10 @@ const Posts: React.FC<PostsProps> = ({ className }) => {
                 <h3>{memory.creator}</h3>
                 <BsThreeDots
                   className="cursor-pointer"
-                  onClick={() => {
-                    localStorage.setItem(
-                      "currentMemory",
-                      JSON.stringify(memory)
-                    );
-                  }}
+                  onClick={() => onEdit(memory)} // Trigger edit callback
                 />
               </div>
-              {/* <p>{moment(memory.createdAt).fromNow()}</p> */}
+              <p>{moment(memory.createdAt).fromNow()}</p>
             </div>
           </div>
           <div className="flex flex-col justify-between h-[240px]">
