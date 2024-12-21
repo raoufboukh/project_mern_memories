@@ -13,6 +13,7 @@ interface NewMemory {
 
 interface Memory extends NewMemory {
   _id: string;
+  createdAt: string;
 }
 
 interface MemoriesState {

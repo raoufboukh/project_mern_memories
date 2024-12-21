@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addMemory } from "../store/memoriesSlice";
 
 interface FormProps {
@@ -45,6 +45,17 @@ const Form: React.FC<FormProps> = ({ className }) => {
     setTags("");
     setImage("");
   };
+  useEffect(() => {
+    if (localStorage.getItem("currentMemory")) {
+      const memory = JSON.parse(localStorage.getItem("currentMemory") || "");
+      console.log(memory);
+      setCreator(memory.creator);
+      setTitle(memory.title);
+      setMessage(memory.message);
+      setTags(memory.tags);
+      setImage(memory.image);
+    }
+  }, []);
 
   return (
     <div className={className}>

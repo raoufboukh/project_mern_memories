@@ -9,10 +9,13 @@ import {
   likeMemory,
 } from "../store/memoriesSlice";
 import { AppDispatch, RootState } from "../store/store";
+// import moment from "moment";
 
 interface PostsProps {
   className: string;
 }
+
+localStorage.removeItem("currentMemory");
 
 const Posts: React.FC<PostsProps> = ({ className }) => {
   const memories = useSelector((state: RootState) => state.memories.memories);
@@ -21,7 +24,6 @@ const Posts: React.FC<PostsProps> = ({ className }) => {
   useEffect(() => {
     dispatch(fetchMemories());
   }, [dispatch]);
-  console.log(memories);
   return (
     <div className={className}>
       {memories.map((memory) => (
@@ -31,12 +33,20 @@ const Posts: React.FC<PostsProps> = ({ className }) => {
         >
           <div className="relative h-40">
             <img src={memory.image} className="w-full h-full" alt="" />
-            <div className="absolute w-full  text-white text-sm top-0 left-0 p-2">
+            <div className="absolute w-full h-full bg-black bg-opacity-20 text-white text-sm top-0 left-0 p-2">
               <div className="flex justify-between items-center">
                 <h3>{memory.creator}</h3>
-                <BsThreeDots className="cursor-pointer" />
+                <BsThreeDots
+                  className="cursor-pointer"
+                  onClick={() => {
+                    localStorage.setItem(
+                      "currentMemory",
+                      JSON.stringify(memory)
+                    );
+                  }}
+                />
               </div>
-              <p>3 Hours ago</p>
+              {/* <p>{moment(memory.createdAt).fromNow()}</p> */}
             </div>
           </div>
           <div className="flex flex-col justify-between h-[240px]">
