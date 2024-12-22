@@ -20,6 +20,7 @@ const Home = () => {
         <Form
           className="lg:basis-[290px] lg:order-7 -order-1"
           memoryToEdit={memoryToEdit}
+          onEdit={(memory) => setMemoryToEdit(memory)}
         />
       </div>
     </div>

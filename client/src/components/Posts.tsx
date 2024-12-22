@@ -23,16 +23,16 @@ const Posts: React.FC<PostsProps> = ({ className, onEdit }) => {
 
   useEffect(() => {
     dispatch(fetchMemories());
-  }, [dispatch]);
+  }, [dispatch, memories]);
 
   return (
     <div className={className}>
       {memories.map((memory) => (
         <div
           key={memory._id}
-          className="bg-white rounded-xl overflow-hidden h-[400px]"
+          className="bg-white rounded-xl overflow-hidden min-h[400px] lg:h-[400px]"
         >
-          <div className="relative h-40">
+          <div className="relative min-h-40 lg:h-40">
             <img src={memory.image} className="w-full h-full" alt="" />
             <div className="absolute w-full h-full bg-black bg-opacity-20 text-white text-sm top-0 left-0 p-2">
               <div className="flex justify-between items-center">
@@ -45,9 +45,9 @@ const Posts: React.FC<PostsProps> = ({ className, onEdit }) => {
               <p>{moment(memory.createdAt).fromNow()}</p>
             </div>
           </div>
-          <div className="flex flex-col justify-between h-[240px]">
+          <div className="flex flex-col justify-between min-h-[240px] lg:h-[240px]">
             <div className="p-3">
-              <p className="text-gray-400">{memory.tags}</p>
+              <p className="text-gray-400">#{memory.tags}</p>
               <h2 className="text-2xl my-3">{memory.title}</h2>
               <p className="text-gray-400">{memory.message}</p>
             </div>

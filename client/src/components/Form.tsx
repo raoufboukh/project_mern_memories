@@ -7,9 +7,10 @@ import { addMemory, updateMemory } from "../store/memoriesSlice";
 interface FormProps {
   className: string;
   memoryToEdit?: any;
+  onEdit: (memory: any) => void;
 }
 
-const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
+const Form: React.FC<FormProps> = ({ className, memoryToEdit, onEdit }) => {
   const [creator, setCreator] = useState("");
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -51,7 +52,8 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
     };
 
     if (memoryToEdit) {
-      dispatch(updateMemory({ id: memoryData._id, memory: memoryData })); // Update existing memory
+      dispatch(updateMemory({ id: memoryData._id, memory: memoryData }));
+      onEdit("");
     } else {
       dispatch(addMemory(memoryData));
     }
@@ -63,6 +65,7 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
     setImage(null);
   };
 
+  console.log(memoryToEdit);
   return (
     <div className={className}>
       <form onSubmit={handleSubmit}>
@@ -117,6 +120,7 @@ const Form: React.FC<FormProps> = ({ className, memoryToEdit }) => {
               setMessage("");
               setTags("");
               setImage(null);
+              onEdit("");
             }}
             className="bg-red-400 text-white p-2 w-[90%]"
           >
