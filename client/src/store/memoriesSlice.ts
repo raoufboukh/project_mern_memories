@@ -33,7 +33,9 @@ export const fetchMemories = createAsyncThunk<Memory[]>(
   "memories/fetchMemories",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("http://localhost:3000/");
+      const response = await axios.get(
+        "https://morning-chamber-94772-6012d602433d.herokuapp.com/"
+      );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to fetch memories");
@@ -45,7 +47,10 @@ export const addMemory = createAsyncThunk<Memory, NewMemory>(
   "memories/addMemory",
   async (memory, { rejectWithValue }) => {
     try {
-      const response = await axios.post("http://localhost:3000/", memory);
+      const response = await axios.post(
+        "https://morning-chamber-94772-6012d602433d.herokuapp.com/",
+        memory
+      );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to add memory");
@@ -57,7 +62,9 @@ export const deleteMemory = createAsyncThunk<string, string>(
   "memories/deleteMemory",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:3000/${id}`);
+      await axios.delete(
+        `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}`
+      );
       return id;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to delete memory");
@@ -69,7 +76,9 @@ export const likeMemory = createAsyncThunk<Memory, string>(
   "memories/likeMemory",
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.patch(`http://localhost:3000/${id}/like`);
+      const response = await axios.patch(
+        `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}/like`
+      );
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to like memory");
@@ -82,7 +91,10 @@ export const updateMemory = createAsyncThunk<
   { id: string; memory: Partial<Memory> }
 >("memories/updateMemory", async ({ id, memory }, { rejectWithValue }) => {
   try {
-    const response = await axios.patch(`http://localhost:3000/${id}`, memory);
+    const response = await axios.patch(
+      `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}`,
+      memory
+    );
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.message || "Failed to update memory");
