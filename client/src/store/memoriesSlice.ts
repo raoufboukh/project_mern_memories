@@ -34,7 +34,7 @@ export const fetchMemories = createAsyncThunk<Memory[]>(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://morning-chamber-94772-6012d602433d.herokuapp.com/"
+        "https://project-mern-memories-api.vercel.app/"
       );
       return response.data;
     } catch (error: any) {
@@ -48,7 +48,7 @@ export const addMemory = createAsyncThunk<Memory, NewMemory>(
   async (memory, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://morning-chamber-94772-6012d602433d.herokuapp.com/",
+        "https://project-mern-memories-api.vercel.app/",
         memory
       );
       return response.data;
@@ -62,9 +62,7 @@ export const deleteMemory = createAsyncThunk<string, string>(
   "memories/deleteMemory",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(
-        `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}`
-      );
+      await axios.delete(`https://project-mern-memories-api.vercel.app/${id}`);
       return id;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to delete memory");
@@ -77,7 +75,7 @@ export const likeMemory = createAsyncThunk<Memory, string>(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.patch(
-        `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}/like`
+        `https://project-mern-memories-api.vercel.app/${id}/like`
       );
       return response.data;
     } catch (error: any) {
@@ -92,7 +90,7 @@ export const updateMemory = createAsyncThunk<
 >("memories/updateMemory", async ({ id, memory }, { rejectWithValue }) => {
   try {
     const response = await axios.patch(
-      `https://morning-chamber-94772-6012d602433d.herokuapp.com/${id}`,
+      `https://project-mern-memories-api.vercel.app/${id}`,
       memory
     );
     return response.data;
