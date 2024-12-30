@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(
   cors({
-    origin: "https://project-mern-memories-orpin.vercel.app/",
+    origin: "https://project-mern-memories-orpin.vercel.app",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true,
   })
